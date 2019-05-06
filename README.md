@@ -1,6 +1,8 @@
 # BrickGame
 
-Brock Game on React Native demo app
+Brick Game on React Native demo app
+
+![Brick Game](https://github.com/l0ne/BrickGame/raw/master/screenshot.png)
 
 ### How To Use
 
