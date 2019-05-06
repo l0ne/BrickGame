@@ -8,10 +8,10 @@ Brick Game on React Native demo app
 
 ```
 # Clone this repository
-git clone https://github.com/l0ne/react-native-skills.git
+git clone https://github.com/l0ne/BrickGame.git
 
 # Go into the repository
-cd react-native-skills
+cd BrickGame
 
 # Install dependencies
 yarn install
