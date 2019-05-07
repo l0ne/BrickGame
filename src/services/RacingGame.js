@@ -1,16 +1,17 @@
 class RacingGame {
 
     coordinates = [];
-    myCar = [];
     score = 0;
     level = 1;
     speed = 1;
+    lives = [];
 
     constructor() {
 
     }
 
     initLevel() {
+        this.lives = [0, 10, 20, 30];
         const roadL = this.calculateRoads();
         const roadR = this.calculateRoads(9);
         const car = this.calculateCar();
@@ -88,6 +89,17 @@ class RacingGame {
             position + 31
         ];
         return result;
+    }
+
+    isCarsCollision(car, road, i) {
+
+        let res = car.filter(i => road.indexOf(i) < 0);
+        if (res.length != car.length) {
+            this.score = i;
+            return true;
+        }
+
+        return false;
     }
 
 }

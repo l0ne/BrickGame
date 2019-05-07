@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {Number} from "../components/Number";
 import {racingGame} from "../services/RacingGame";
 import {Score} from "../components/Score";
+import {powerSwitch, pressLeft, pressRigth, startGame} from "../actions/ControlsActions";
 
 class Monitor extends Component {
 
@@ -55,18 +56,50 @@ class Monitor extends Component {
         }
     }
 
+
+
     async startGame() {
 
+        this.drawSmallScreen(racingGame.lives);
+
+        let protect = 0;
+        if (this.state.pause > 0) {
+            protect = this.state.pause + 20;
+        }
+
         for (let i = this.state.pause ? this.state.pause : 0; i <= racingGame.coordinates.length; i++) {
+
             if (!this.props.controls.isStartGame) {
                 this.setState({pause: i});
                 return false;
             }
-            racingGame.coordinates[i] = racingGame.coordinates[i].concat(racingGame.car(this.state.carPosition));
+
+            let car = racingGame.car(this.state.carPosition);
+            if (racingGame.isCarsCollision(car, racingGame.coordinates[i], i) && i > protect) {
+                racingGame.lives.shift();
+                this.drawSmallScreen(racingGame.lives);
+                this.setState({pause: i});
+                this.props.startGame(this.props.controls.isStartGame);
+
+                if (!racingGame.lives.length) {
+                    this.showGameover();
+                }
+
+                console.log('collision')
+                return false;
+            }
+
+            racingGame.coordinates[i] = racingGame.coordinates[i].concat(car);
             this.drawFrame(racingGame.coordinates[i], i);
             await this.sleep(100);
         }
 
+    }
+
+    showGameover() {
+        this.setState({pause: null, score: 0});
+        racingGame.initLevel();
+        this.loading();
     }
 
     async loading() {
@@ -151,6 +184,30 @@ class Monitor extends Component {
         this.setState({screen, smallScreen});
     }
 
+    drawSmallScreen(coordinates) {
+
+        let smallScreen = [];
+
+        for (let j = 0; j < 4; j++) {
+            let chars = [];
+            for (let i = 0; i < 4; i++) {
+                chars.push({id: i, on: 0});
+            }
+            smallScreen.push({id: j, chars: chars});
+        }
+
+        coordinates.map(item => {
+            let i = item/10;
+            let x = Math.floor(i);
+            let y = Math.round((i - x) * 10)
+            if (smallScreen[x] && smallScreen[x].chars[y]) {
+                smallScreen[x].chars[y].on = 1
+            }
+        });
+
+        this.setState({smallScreen});
+    }
+
     render() {
         const {screen, smallScreen, score} = this.state;
         return (
@@ -185,11 +242,20 @@ class Monitor extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        powerSwitch: (state) => dispatch(powerSwitch(state)),
+        startGame: (state) => dispatch(startGame(state)),
+        pressLeft: () => dispatch(pressLeft()),
+        pressRigth: () => dispatch(pressRigth())
+    }
+}
+
 const mapStateToProps = (state) => ({
     controls: state.controls
 })
 
-export default connect(mapStateToProps, null)(Monitor);
+export default connect(mapStateToProps, mapDispatchToProps)(Monitor);
 
 const styles = StyleSheet.create({
     screen: {
