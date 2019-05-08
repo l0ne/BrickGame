@@ -1,12 +1,9 @@
 import React, {Component} from "react";
-import {View, Text, StyleSheet} from "react-native";
-
-import {Сube} from "../components/Сube";
 import {connect} from "react-redux";
-import {Number} from "../components/Number";
 import {racingGame} from "../services/RacingGame";
-import {Score} from "../components/Score";
 import {powerSwitch, pressLeft, pressRigth, startGame} from "../actions/ControlsActions";
+import {Screen} from "../components/Screen";
+import {Vibration} from "react-native";
 
 class Monitor extends Component {
 
@@ -76,10 +73,13 @@ class Monitor extends Component {
 
             let car = racingGame.car(this.state.carPosition);
             if (racingGame.isCarsCollision(car, racingGame.coordinates[i], i) && i > protect) {
+                Vibration.vibrate(500)
                 racingGame.lives.shift();
                 this.drawSmallScreen(racingGame.lives);
                 this.setState({pause: i});
                 this.props.startGame(this.props.controls.isStartGame);
+
+                this.showCrash(racingGame.coordinates[i]);
 
                 if (!racingGame.lives.length) {
                     this.showGameover();
@@ -94,6 +94,25 @@ class Monitor extends Component {
             await this.sleep(100);
         }
 
+    }
+
+    showCrash(coordinates) {
+        let carCrash = [];
+        let j = false;
+        let frame = [];
+        let cPos = this.state.carPosition;
+        for (let i=0; i<4; i++) {
+            if (j) {
+                carCrash = [cPos-1, cPos+2, cPos+10, cPos+11, cPos+20, cPos+21, cPos+29, cPos+32];
+                j = false;
+            } else {
+                carCrash = [cPos, cPos+1, cPos+30, cPos+31, cPos+9, cPos+19, cPos+12, cPos+22];
+                j = true;
+            }
+            frame = carCrash.concat(coordinates);
+            this.drawFrame(frame);
+            this.sleep(10);
+        }
     }
 
     showGameover() {
@@ -211,33 +230,8 @@ class Monitor extends Component {
     render() {
         const {screen, smallScreen, score} = this.state;
         return (
-            <View style={styles.screen}>
-                <View style={styles.screenMain}>
-                    {screen.map(i => <View style={{flexDirection: 'row'}} key={i.id}>
-                        {i.chars.map(j => <Сube color={j.on ? '#000' : '#a3a39a'} size={12} key={j.id}/>)}
-                    </View>)}
-                </View>
-                <View style={{flex: 1, alignItems: 'center', marginTop: 10}}>
-                    <Score text='HIGH SCORE' number={racingGame.score}/>
-                    <View style={{marginTop: 10}}/>
-                    <Score text='SCORE' number={score} />
-                    <View style={{marginTop: 40}}>
-                        {smallScreen.map(i => <View style={{flexDirection: 'row'}} key={i.id}>
-                            {i.chars.map(j => <Сube color={j.on ? '#000' : '#a3a39a'} size={11} key={j.id}/>)}
-                        </View>)}
-                    </View>
-                    <View style={{flexDirection: 'row', alignItems: 'space-between', marginTop: 30}}>
-                        <View style={{alignItems: 'center'}}>
-                            <Number number={racingGame.speed}/>
-                            <Text style={{fontSize: 8, marginTop: 2}}>SPEED</Text>
-                        </View>
-                        <View style={{marginLeft: 2, alignItems: 'center'}}>
-                            <Number number={racingGame.level}/>
-                            <Text style={{fontSize: 8, marginTop: 2}}>LEVEL</Text>
-                        </View>
-                    </View>
-                </View>
-            </View>
+            <Screen screen={screen} smallScreen={smallScreen} score={score} highScore={racingGame.score}
+                    speed={racingGame.speed} level={racingGame.level}/>
         );
     }
 }
@@ -256,20 +250,3 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Monitor);
-
-const styles = StyleSheet.create({
-    screen: {
-        flexDirection: 'row',
-        backgroundColor: '#bec3b5',
-        width: '100%',
-        height: '100%',
-        borderWidth: 15,
-        borderLeftColor: '#b3b3b3',
-        borderTopColor: '#a8a8a8',
-        borderRightColor: '#c9c9c9',
-        borderBottomColor: '#cfcfcf',
-        padding: 1,
-        paddingTop: 2
-    },
-    screenMain: {borderRightWidth: 2, borderTopWidth: 2, borderBottomWidth: 2, marginLeft: 1, paddingRight: 1, paddingTop: 3}
-});

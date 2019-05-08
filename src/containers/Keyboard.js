@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from "react";
-import {View, Text, TouchableOpacity} from "react-native";
+import {View, Vibration} from "react-native";
 import {Button} from "../components/Button";
 import {connect} from "react-redux";
 import {powerSwitch, startGame, pressLeft, pressRigth} from "../actions/ControlsActions";
@@ -21,10 +21,12 @@ class Keyboard extends Component {
     }
 
     pressLeft() {
+        Vibration.vibrate(100)
         this.props.pressLeft();
     }
 
     pressRigth() {
+        Vibration.vibrate(100)
         this.props.pressRigth();
     }
 
