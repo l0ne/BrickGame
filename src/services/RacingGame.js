@@ -16,7 +16,7 @@ class RacingGame {
         const roadR = this.calculateRoads(9);
         const car = this.calculateCar();
         const car2 = this.calculateCar();
-        for (let i = 0; i < 1000; i++) {
+        for (let i = 0; i < 10000; i++) {
             let coordinates = []
             coordinates = coordinates.concat(roadL.next().value);
             coordinates = coordinates.concat(roadR.next().value);
