@@ -4,6 +4,7 @@ import {racingGame} from "../services/RacingGame";
 import {powerSwitch, pressLeft, pressRigth, startGame} from "../actions/ControlsActions";
 import {Screen} from "../components/Screen";
 import {Vibration} from "react-native";
+import {PREVIEW_GAME} from "../constants";
 
 class Monitor extends Component {
 
@@ -145,6 +146,8 @@ class Monitor extends Component {
                 counter = 0;
             }
         }
+
+        this.drawFrame(PREVIEW_GAME.A);
     }
 
     drawFrame(coordinates, score) {
