@@ -1,12 +1,13 @@
-import {createAppContainer, createSwitchNavigator} from "react-navigation";
-import {MainContainer} from "../components/Main";
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {MainScreen} from '../screens/Main';
 
-
-const AppNavigator = createSwitchNavigator({
-        Main: MainContainer,
-    }, {
-        initialRouteName: 'Main'
-    }
+const AppNavigator = createSwitchNavigator(
+  {
+    Main: MainScreen,
+  },
+  {
+    initialRouteName: 'Main',
+  },
 );
 
 export const AppContainer = createAppContainer(AppNavigator);

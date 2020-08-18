@@ -1,28 +1,94 @@
-export const COLORS = {
-    black: 'black',
-    grey: '#a3a39a',
-}
+import React from 'react';
 
-export const PREVIEW_GAME = {
-    A: [
-      0,1,2,3,4,5,6,7,8,9,
-      10,14,15,18,19,
-      20,22,24,25,26,28,29,
-      30,32,34,35,36,38,39,
-      40,42,44,45,46,48,49,
-      50,54,55,59,
-      60,61,62,63,64,65,66,67,68,69,
-      80,82,84,86,88,89,
-      90,91,93,95,97,99,
-      100,102,104,106,108,109,
-      110,111,113,115,117,119,
-      120,
-      130,136,
-      140,145,146,147,
-      156,
-      162,165,166,167,
-      171,172,173,
-      182,
-      191,192,193
-    ]
-}
+export const COLORS = {
+  black: '#000000',
+  grey: '#a3a39a',
+};
+
+export const LABELS = {
+  BRICK: 'BRICK',
+  GAME: 'GAME',
+  COUNT: '1 in 1',
+  SERIAL: 'E 88',
+  START: 'START/P',
+  ONOFF: 'ON/OFF',
+  SOUND: 'SOUND',
+  LEFT: 'LEFT',
+  DOWN: 'DOWN',
+  RIGHT: 'RIGHT',
+  ROTATE: 'ROTATE',
+  SCORE: 'SCORE',
+  HSCORE: 'HIGH SCORE',
+  SPEED: 'SPEED',
+  LEVEL: 'LEVEL',
+};
+
+export const FIGURE_CUBE = '[x],[x]/[x],[x]';
+export const FIGURE_7 = '[x],[ ],[ ]/[x],[x],[x]';
+export const FIGURE_Z = '[ ],[x],[x]/[x],[x],[ ]';
+export const FIGURE_1 = '[ ],[ ],[x]/[x],[x],[x]';
+export const FIGURE_4 = '[x],[x],[ ]/[ ],[x],[x]';
+export const FIGURE_T = '[x],[x],[x]/[ ],[x],[ ]';
+export const FIGURE_L = '[x],[x],[x]/[ ],[ ],[x]';
+
+export const NUMBER_CONFIG = [
+  [1, 1, 1, 1, 0, 1, 1],
+  [0, 0, 1, 0, 0, 1, 0],
+  [0, 1, 1, 1, 1, 0, 1],
+  [0, 1, 1, 0, 1, 1, 1],
+  [1, 0, 1, 0, 1, 1, 0],
+  [1, 1, 0, 0, 1, 1, 1],
+  [1, 1, 0, 1, 1, 1, 1],
+  [0, 1, 1, 0, 0, 1, 0],
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 0, 1, 1, 1],
+  [0, 0, 0, 0, 0, 0, 0],
+]; // left top rigth left top rigth bottom
+
+export const INIT_SCREEN = [
+  'x,x,x,x,x,x,x,x,x,x',
+  'x, , , ,x,x, , ,x,x',
+  'x, ,x, ,x,x,x, ,x,x',
+  'x, ,x, ,x,x,x, ,x,x',
+  'x, ,x, ,x,x,x, ,x,x',
+  'x, , , ,x,x, , , ,x',
+  'x,x,x,x,x,x,x,x,x,x',
+  ' , , , , , , , , , ',
+  'x, ,x, ,x, ,x, ,x,x',
+  'x,x, ,x, ,x, ,x, ,x',
+  'x, ,x, ,x, ,x, ,x,x',
+  'x,x, ,x, ,x, ,x, ,x',
+  'x, , , , , , , , , ',
+  'x, , , , , ,x, , , ',
+  'x, , , , ,x,x,x, , ',
+  ' , , , , , ,x, , , ',
+  ' , ,x, , ,x,x,x, , ',
+  ' ,x,x,x, , , , , , ',
+  ' , ,x, , , , , , , ',
+  ' ,x,x,x, , , , , , ',
+  ' , , , , , , , , , ',
+];
+
+export const START_SCREEN = [
+  'x,x,x,x,x,x,x,x,x, ',
+  'x, , , , , , , , ,x',
+  'x, , , , , , , , ,x',
+  ' , , , , , , , , ,x',
+  'x, , , , , , , , , ',
+  'x, , , , , , , , ,x',
+  'x, , , , , , , , ,x',
+  ' , , , , , , , , ,x',
+  'x, ,x, ,x, ,x, ,x, ',
+  'x,x, ,x, ,x, ,x, ,x',
+  'x, ,x, ,x, ,x, ,x,x',
+  ' ,x, ,x, ,x, ,x, ,x',
+  'x, , , , , , , , , ',
+  'x, , , , , , , , ,x',
+  'x, , , , , , , , ,x',
+  ' , , , , , , , , ,x',
+  'x, , ,x, , , , , , ',
+  'x, ,x,x,x, , , , ,x',
+  'x, , ,x, , , , , ,x',
+  ' , ,x,x,x, , , , ,x',
+  'x, , , , , , , , , ',
+];
