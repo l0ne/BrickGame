@@ -2,7 +2,7 @@
 
 Brick Game on React Native demo app
 
-![Brick Game](https://github.com/l0ne/BrickGame/raw/master/screenshot.png)
+![Brick Game](https://github.com/l0ne/BrickGame/raw/master/gif.gif)
 
 ### How To Use
 
