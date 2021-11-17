@@ -1,6 +1,0 @@
-module Pods_BrickGame {
-  umbrella header "Pods-BrickGame-umbrella.h"
-
-  export *
-  module * { export * }
-}
