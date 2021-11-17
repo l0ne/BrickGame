@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import store from './src/store';
 import NavigationService from './src/services/NavigationService';
 
-export default class App extends React.Component {
+export default class __App extends React.Component {
   render() {
     console.disableYellowBox = true;
     return (
